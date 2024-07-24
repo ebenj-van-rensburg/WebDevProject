@@ -4,7 +4,6 @@ import { getUser, updateUser, followUser, unfollowUser } from '../controllers/us
 
 const router = express.Router();
 
-router.get('/me', authMiddleware, getUser);
 router.get('/:id', authMiddleware, getUser);
 router.put('/:id', authMiddleware, updateUser);
 router.post('/:id/follow', authMiddleware, followUser);

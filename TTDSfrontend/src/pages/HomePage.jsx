@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import api from '../axiosConfig';
 import PostForm from '../components/PostForm';
+import Post from '../components/Post';
 
 const HomePage = () => {
-  const [posts, setPosts] = useState([]); // Initialize posts as an empty array
-  const [loading, setLoading] = useState(true); // Initialize loading state
-  const [error, setError] = useState(null); // Initialize error state
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -20,7 +21,7 @@ const HomePage = () => {
       } catch (error) {
         setError(error.message);
       } finally {
-        setLoading(false); // Set loading to false after fetch completes
+        setLoading(false);
       }
     };
 
@@ -31,15 +32,12 @@ const HomePage = () => {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="home-page">
-      <h1>Home</h1>
+    <div className="home-page p-6 ml-64">
+      <h1 className="text-2xl font-bold mb-6">Home</h1>
       <PostForm isHomePage={true} />
-      <div className="posts">
+      <div className="posts mt-6 space-y-4">
         {posts.map(post => (
-          <div key={post._id} className="post">
-            <p>{post.text}</p>
-            {post.image && <img src={post.image} alt="Post" />}
-          </div>
+          <Post key={post._id} post={post} />
         ))}
       </div>
     </div>

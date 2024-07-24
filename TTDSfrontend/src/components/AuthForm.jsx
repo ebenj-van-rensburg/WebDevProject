@@ -1,12 +1,11 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
-import api from '../axiosConfig';
 
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({ email: '', password: '', username: '' });
-  const { login } = useContext(AuthContext);
+  const { login, signup } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleInputChange = (e) => {
@@ -18,15 +17,10 @@ const AuthForm = () => {
     e.preventDefault();
     if (isLogin) {
       await login(formData.email, formData.password);
-      navigate('/profile/me'); // Redirect to the profile page after login
+      navigate(`/profile/${localStorage.getItem('userId')}`); // Redirect to the profile page after login
     } else {
-      try {
-        const response = await api.post('/auth/register', formData);
-        localStorage.setItem('token', response.data.token);
-        navigate('/profile/me'); // Redirect to the profile page after signup
-      } catch (error) {
-        console.error(error);
-      }
+      await signup(formData);
+      navigate(`/profile/${localStorage.getItem('userId')}`); // Redirect to the profile page after signup
     }
   };
 

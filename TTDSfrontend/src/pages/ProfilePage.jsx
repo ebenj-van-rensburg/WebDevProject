@@ -1,47 +1,48 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import api from '../axiosConfig';
 import PostForm from '../components/PostForm';
+import Post from '../components/Post';
+import { AuthContext } from '../context/AuthContext';
 
 const ProfilePage = () => {
   const { id } = useParams();
-  const [user, setUser] = useState(null); // Initialize user as null
-  const [posts, setPosts] = useState([]); // Initialize posts as an empty array
-  const [loading, setLoading] = useState(true); // Initialize loading state
-  const [error, setError] = useState(null); // Initialize error state
+  const { user } = useContext(AuthContext);
+  const [profile, setProfile] = useState(null);
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const userResponse = await api.get(`/users/${id}`);
-        setUser(userResponse.data);
+        const userId = id || user?.id;
+        const userResponse = await api.get(`/users/${userId}`);
+        setProfile(userResponse.data);
 
-        const postsResponse = await api.get(`/posts/${id}`);
+        const postsResponse = await api.get(`/posts/${userId}`);
         setPosts(postsResponse.data);
       } catch (error) {
         setError(error.message);
       } finally {
-        setLoading(false); // Set loading to false after fetch completes
+        setLoading(false);
       }
     };
 
     fetchUserData();
-  }, [id]);
+  }, [id, user]);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="profile-page">
-      <h1>{user.username}</h1>
-      <p>{user.bio}</p>
+    <div className="profile-page p-6 ml-64">
+      <h1 className="text-2xl font-bold mb-4">{profile.username}</h1>
+      <p className="mb-6">{profile.bio}</p>
       <PostForm isHomePage={false} />
-      <div className="posts">
+      <div className="posts mt-6 space-y-4">
         {posts.map(post => (
-          <div key={post._id} className="post">
-            <p>{post.text}</p>
-            {post.image && <img src={post.image} alt="Post" />}
-          </div>
+          <Post key={post._id} post={post} />
         ))}
       </div>
     </div>

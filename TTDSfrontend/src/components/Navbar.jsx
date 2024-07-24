@@ -8,22 +8,22 @@ const Navbar = () => {
 
   const handleLogout = () => {
     logout();
-    navigate('/');
+    navigate('/login');
   };
 
   return (
-    <nav className="bg-blue-500 p-4">
+    <nav className="bg-gray-700 text-white p-4 shadow-lg">
       <div className="container mx-auto flex justify-between items-center">
-        <Link to="/" className="text-white text-lg font-bold">MERN Social</Link>
-        <div>
-          <Link to="/" className="text-white mr-4">Home</Link>
+        <Link to="/" className="text-lg font-bold">TabletopDesignSuite</Link>
+        <div className="space-x-4">
+          <Link to="/" className="hover:underline">Home</Link>
           {user ? (
             <>
-              <Link to={`/profile/${user.id}`} className="text-white mr-4">Profile</Link>
-              <button onClick={handleLogout} className="text-white">Logout</button>
+              <Link to={`/profile/${localStorage.getItem('userId')}`} className="hover:underline">Profile</Link>
+              <button onClick={handleLogout} className="hover:underline">Logout</button>
             </>
           ) : (
-            <Link to="/login" className="text-white">Login</Link>
+            <Link to="/login" className="hover:underline">Login</Link>
           )}
         </div>
       </div>

@@ -8,26 +8,39 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (token) {
-      api.get('/users/me')
+    const userId = localStorage.getItem('userId');
+    if (token && userId) {
+      api.get(`/users/${userId}`)
         .then(response => setUser(response.data))
-        .catch(() => localStorage.removeItem('token'));
+        .catch(() => {
+          localStorage.removeItem('token');
+          localStorage.removeItem('userId');
+        });
     }
   }, []);
 
   const login = async (email, password) => {
     const response = await api.post('/auth/login', { email, password });
     localStorage.setItem('token', response.data.token);
+    localStorage.setItem('userId', response.data.user.id);
+    setUser(response.data.user);
+  };
+
+  const signup = async (formData) => {
+    const response = await api.post('/auth/register', formData);
+    localStorage.setItem('token', response.data.token);
+    localStorage.setItem('userId', response.data.user.id);
     setUser(response.data.user);
   };
 
   const logout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('userId');
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, signup, logout }}>
       {children}
     </AuthContext.Provider>
   );

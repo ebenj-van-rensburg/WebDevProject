@@ -12,4 +12,16 @@ api.interceptors.request.use(config => {
   return config;
 });
 
+api.interceptors.response.use(
+  response => response,
+  error => {
+    if (error.response && error.response.status === 401) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('userId');
+      window.location.href = '/login'; // Redirect to login if unauthorized
+    }
+    return Promise.reject(error);
+  }
+);
+
 export default api;

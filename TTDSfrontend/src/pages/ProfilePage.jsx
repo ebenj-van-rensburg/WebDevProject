@@ -36,11 +36,11 @@ const ProfilePage = () => {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="profile-page p-6 ml-64">
-      <h1 className="text-2xl font-bold mb-4">{profile.username}</h1>
-      <p className="mb-6">{profile.bio}</p>
+    <div className="profile-page p-6 ml-64 bg-light-wood dark:bg-dark-wood min-h-screen">
+      <h1 className="text-2xl font-bold mb-4 text-dark-wood dark:text-light-wood">{profile.username}</h1>
+      <p className="mb-6 text-dark-wood dark:text-light-wood">{profile.bio}</p>
       <PostForm isHomePage={false} />
-      <div className="posts mt-6 space-y-4">
+      <div className="posts mt-6 mx-auto max-w-3xl space-y-4">
         {posts.map(post => (
           <Post key={post._id} post={post} />
         ))}

@@ -44,9 +44,9 @@ const Post = ({ post }) => {
   };
 
   return (
-    <div className="post bg-white p-4 shadow-md rounded-lg mb-4">
+    <div className="post bg-light-wood dark:bg-dark-wood p-4 shadow-md rounded-lg mb-4 text-dark-wood dark:text-light-wood">
       <p>{post.text}</p>
-      {post.image && <img src={`/${post.image}`} alt="Post" className="mt-2" />}
+      {post.image && <img src={`/${post.image}`} alt="Post" className="mt-2 rounded" />}
       <div className="mt-2">
         <button onClick={handleLike} className="mr-2 bg-blue-600 text-white px-2 py-1 rounded">Like</button>
         <button onClick={handleUnlike} className="mr-2 bg-red-600 text-white px-2 py-1 rounded">Unlike</button>
@@ -54,7 +54,7 @@ const Post = ({ post }) => {
       </div>
       <div className="comments mt-4">
         {comments.map(comment => (
-          <div key={comment._id} className="comment bg-gray-100 p-2 rounded mb-2">
+          <div key={comment._id} className="comment bg-gray-100 dark:bg-gray-700 p-2 rounded mb-2">
             <p>{comment.text}</p>
           </div>
         ))}

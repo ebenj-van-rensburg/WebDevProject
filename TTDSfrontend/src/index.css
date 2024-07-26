@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Add custom styles for the rustic wooden look */
+body {
+  background-color: theme('colors.light-wood');
+  transition: background-color 0.3s ease;
+}
+
+.dark body {
+  background-color: theme('colors.dark-wood');
+}
+
+input, textarea {
+  background-color: theme('colors.light-wood');
+  border: 1px solid theme('colors.dark-wood');
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.dark input, .dark textarea {
+  background-color: theme('colors.dark-wood');
+  border-color: theme('colors.light-wood');
+}

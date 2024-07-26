@@ -1,10 +1,10 @@
 import express from 'express';
 import authMiddleware from '../middleware/authMiddleware.js';
-import { createPost, getPosts, getUserPosts, likePost, unlikePost, commentOnPost, getPostComments } from '../controllers/postController.js';
+import { createPost, getPosts, getUserPosts, likePost, unlikePost, commentOnPost, getPostComments, uploadImage } from '../controllers/postController.js';
 
 const router = express.Router();
 
-router.post('/', authMiddleware, createPost); // Protected route for creating posts
+router.post('/', authMiddleware, uploadImage, createPost); // Protected route for creating posts
 router.get('/', getPosts); // Public route for getting homepage posts
 router.get('/:userId', getUserPosts); // Public route for getting user-specific posts
 router.post('/:id/like', authMiddleware, likePost); // Protected route for liking posts

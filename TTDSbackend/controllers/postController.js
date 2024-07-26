@@ -2,6 +2,7 @@ import Post from '../models/Post.js';
 import User from '../models/User.js';
 import multer from 'multer';
 import { v4 as uuidv4 } from 'uuid';
+import path from 'path';
 
 // Multer setup for file uploads
 const storage = multer.diskStorage({
@@ -9,7 +10,7 @@ const storage = multer.diskStorage({
     cb(null, 'uploads/');
   },
   filename: function (req, file, cb) {
-    cb(null, uuidv4() + '-' + file.originalname);
+    cb(null, uuidv4() + path.extname(file.originalname));
   }
 });
 
@@ -17,11 +18,18 @@ const upload = multer({ storage });
 
 export const uploadImage = upload.single('image');
 
-// Create new post
 export const createPost = async (req, res) => {
   try {
     const { text, isHomePage } = req.body;
     const image = req.file ? req.file.path : null;
+
+    console.log('Text:', text);
+    console.log('IsHomePage:', isHomePage);
+    console.log('Image:', image);
+
+    if (!text) {
+      return res.status(400).json({ message: 'Text is required' });
+    }
 
     const post = new Post({
       user: req.user.id,
@@ -33,6 +41,7 @@ export const createPost = async (req, res) => {
     await post.save();
     res.status(201).json(post);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: 'Server error' });
   }
 };

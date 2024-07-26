@@ -1,9 +1,9 @@
 import React from 'react';
-import AuthForm from '../components/AuthForm.jsx';
+import AuthForm from '../components/AuthForm';
 
 const LoginPage = () => {
   return (
-    <div className="login-page">
+    <div className="login-page bg-light-wood dark:bg-dark-wood min-h-screen flex items-center justify-center">
       <AuthForm />
     </div>
   );

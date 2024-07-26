@@ -32,10 +32,10 @@ const HomePage = () => {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="home-page p-6 ml-64">
-      <h1 className="text-2xl font-bold mb-6">Home</h1>
+    <div className="home-page p-6 ml-64 bg-light-wood dark:bg-dark-wood min-h-screen">
+      <h1 className="text-2xl font-bold mb-6 text-dark-wood dark:text-light-wood">Home</h1>
       <PostForm isHomePage={true} />
-      <div className="posts mt-6 space-y-4">
+      <div className="posts mt-6 mx-auto max-w-3xl space-y-4">
         {posts.map(post => (
           <Post key={post._id} post={post} />
         ))}

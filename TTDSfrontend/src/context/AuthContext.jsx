@@ -22,14 +22,14 @@ const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     const response = await api.post('/auth/login', { email, password });
     localStorage.setItem('token', response.data.token);
-    localStorage.setItem('userId', response.data.user.id);
+    localStorage.setItem('userId', response.data.user._id);
     setUser(response.data.user);
   };
 
   const signup = async (formData) => {
     const response = await api.post('/auth/register', formData);
     localStorage.setItem('token', response.data.token);
-    localStorage.setItem('userId', response.data.user.id);
+    localStorage.setItem('userId', response.data.user._id);
     setUser(response.data.user);
   };
 

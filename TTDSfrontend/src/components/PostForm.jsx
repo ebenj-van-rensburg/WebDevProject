@@ -21,7 +21,9 @@ const PostForm = ({ isHomePage }) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append('text', text);
-    formData.append('image', image);
+    if (image) {
+      formData.append('image', image);
+    }
     formData.append('isHomePage', isHomePage);
 
     try {
@@ -39,11 +41,13 @@ const PostForm = ({ isHomePage }) => {
   };
 
   return (
-    <div className="post-form bg-white p-4 shadow-md rounded-lg">
+    <div className="post-form bg-white dark:bg-gray-800 p-4 shadow-md rounded-lg">
       <form onSubmit={handleSubmit}>
-        <ReactQuill value={text} onChange={handleTextChange} placeholder="What's on your mind?" />
-        <input type="file" onChange={handleImageChange} className="mt-2" />
-        <button type="submit" className="mt-2 bg-blue-600 text-white px-4 py-2 rounded-lg">Post</button>
+        <label htmlFor="text" className="block text-gray-700 dark:text-gray-300 mb-2">Text</label>
+        <ReactQuill value={text} onChange={handleTextChange} placeholder="What's on your mind?" className="mb-4" />
+        <label htmlFor="image" className="block text-gray-700 dark:text-gray-300 mb-2">Image</label>
+        <input type="file" onChange={handleImageChange} className="mb-4 p-2 border rounded" />
+        <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded-lg">Post</button>
       </form>
     </div>
   );

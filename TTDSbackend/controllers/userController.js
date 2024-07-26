@@ -74,3 +74,18 @@ export const unfollowUser = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
+export const searchUsers = async (req, res) => {
+  const query = req.query.q;
+  console.log('Search query:', query);  // Log the search query
+  try {
+    const users = await User.find({ 
+      username: { $regex: query, $options: 'i' } 
+    }).select('username _id');
+    console.log('Search results:', users);  // Log the search results
+    res.status(200).json(users); // Always return an array
+  } catch (error) {
+    console.error('Error searching users:', error);
+    res.status(500).json({ message: 'Server error', data: [] });
+  }
+};

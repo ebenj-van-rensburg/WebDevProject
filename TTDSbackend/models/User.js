@@ -5,11 +5,11 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   profilePicture: { type: String, default: '' },
-  dateOfBirth: { type: Date },
+  dateOfBirth: { type: Date, required: true },
   bio: { type: String, default: '' },
   location: { type: String, default: '' },
   website: { type: String, default: '' },
-  gender: { type: String, enum: ['Male', 'Female', 'Other'], default: 'Other' },
+  gender: { type: String, enum: ['male', 'female', 'other'], default: 'other' },
   socialLinks: {
     facebook: { type: String, default: '' },
     twitter: { type: String, default: '' },
